@@ -10,4 +10,6 @@
     @empty
         There are no tasks
     @endforelse
+
+    <p><a href="{{ route('tasks.newform') }}">New task+</a></p>
 @endsection
