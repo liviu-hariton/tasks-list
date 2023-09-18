@@ -3,19 +3,20 @@
 @section('title', 'Tasks list')
 
 @section('content')
-    @forelse($tasks as $task)
-        <div>
-            <a href="{{ route('tasks.details', ['task' => $task->id]) }}">{{ $task->title }}</a> | <a href="{{ route('tasks.destroy', ['task' => $task->id]) }}" title="Delete task">(X)</a>
-        </div>
-    @empty
-        There are no tasks
-    @endforelse
+    @if($tasks->count())
+        <ul class="list-group list-group-flush">
+        @foreach($tasks as $task)
+            <li class="list-group-item">
+                <a href="{{ route('tasks.details', ['task' => $task->id]) }}">{{ $task->title }}</a> | <a href="{{ route('tasks.destroy', ['task' => $task->id]) }}" title="Delete task">(X)</a>
+            </li>
+        @endforeach
+        </ul>
+
+        {{-- It generates <nav><ul><li> tags --}}
+        {{ $tasks->links() }}
+    @else
+        <div class="alert alert-warning">There are no tasks to display</div>
+    @endif
 
     <p><a href="{{ route('tasks.newform') }}">New task+</a></p>
-
-    @if($tasks->count())
-        <nav>
-            {{ $tasks->links() }}
-        </nav>
-    @endif
 @endsection
