@@ -33,7 +33,11 @@
 
             <div>
                 @if( session()->has('success') )
-                    <div class="alert alert-info">{{ session('success') }}</div>
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <i class="fa fa-check-double"></i> {{ session('success') }}
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
 
                 @yield('content')
