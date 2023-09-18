@@ -2,7 +2,9 @@
 
 <html lang="en">
 <head>
-    <title>A Meaningful Page Title</title>
+    <title>My Tasks</title>
+
+    @vite(['resources/js/app.js'])
 
     @yield('styles')
 </head>

@@ -72,6 +72,13 @@ Route::get('tasks/{task}/delete', function(Task $task) {
         ->with('success', 'Task deleted successfully');
 })->name('tasks.destroy');*/
 
+Route::get('task/{task}/toggle-complete', function(Task $task) {
+    $task->toggleCompleted();
+
+    return redirect()->route('tasks.details', ['task' => $task])
+        ->with('success', 'Task toggled successfully');
+})->name('task.toggle-complete');
+
 Route::fallback(function (){
     return 'Not found';
 });

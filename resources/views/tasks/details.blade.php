@@ -3,6 +3,14 @@
 @section('title', $task->title)
 
 @section('content')
+    <p>
+        @if($task->completed)
+            Task completed
+        @else
+            Task not completed
+        @endif
+    </p>
+
     <p>{{ $task->description }}</p>
 
     @if($task->long_description)
@@ -11,6 +19,8 @@
 
     <p>{{ $task->created_at }}</p>
     <p>{{ $task->updated_at }}</p>
+
+    <p><a href="{{ route('task.toggle-complete', ['task' => $task]) }}">Toggle complete</a></p>
 
     <p>
         <a href="{{ route('tasks.index') }}">Back</a> |
