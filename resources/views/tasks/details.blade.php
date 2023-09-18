@@ -12,5 +12,9 @@
     <p>{{ $task->created_at }}</p>
     <p>{{ $task->updated_at }}</p>
 
-    <p><a href="{{ route('tasks.index') }}">Back</a></p>
+    <p>
+        <a href="{{ route('tasks.index') }}">Back</a> |
+        <a href="{{ route('tasks.edit', ['task' => $task->id]) }}">Edit task</a> |
+        <a href="{{ route('tasks.destroy', ['task' => $task->id]) }}">Task delete</a>
+    </p>
 @endsection

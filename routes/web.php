@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,32 +26,51 @@ Route::get('/tasks', function () {
     ]);
 })->name('tasks.index');
 
-Route::get('/task/{id}', function ($id) {
+Route::get('/task/{task}/edit', function (Task $task) {
+    return view('tasks/edit', [
+        'task' => $task
+    ]);
+})->name('tasks.edit');
+
+Route::get('/task/{task}', function (Task $task) {
     return view('tasks/details', [
-        'task' => Task::findOrFail($id)
+        'task' => $task
     ]);
 })->name('tasks.details');
 
 Route::view('tasks/new', 'tasks.new')->name('tasks.newform');
 
-Route::post('/tasks', function (Request $request) {
-    $data = $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-        'long_description' => 'required'
-    ]);
+// create new data
+Route::post('/tasks', function (TaskRequest $request) {
+    $task = Task::create($request->validated());
 
-    $task = new Task;
-
-    $task->title = $data['title'];
-    $task->description = $data['description'];
-    $task->long_description = $data['long_description'];
-
-    $task->save();
-
-    return redirect()->route('tasks.details', ['id' => $task->id])
+    return redirect()->route('tasks.details', ['task' => $task->id])
         ->with('success', 'Task created successfully');
 })->name('tasks.new');
+
+// update existing data
+Route::put('/tasks/{task}', function (Task $task, TaskRequest $request) {
+    $task->update($request->validated());
+
+    return redirect()->route('tasks.details', ['task' => $task->id])
+        ->with('success', 'Task updated successfully');
+})->name('tasks.update');
+
+// delete data via GET requests (a link)
+Route::get('tasks/{task}/delete', function(Task $task) {
+    $task->delete();
+
+    return redirect()->route('tasks.index')
+        ->with('success', 'Task deleted successfully');
+})->name('tasks.destroy');
+
+// delete existing data via form post (a button) (with method spoofing @method('delete') inside the blade template)
+Route::delete('tasks/{task}', function(Task $task) {
+    $task->delete();
+
+    return redirect()->route('tasks.index')
+        ->with('success', 'Task deleted successfully');
+})->name('tasks.destroy');
 
 Route::fallback(function (){
     return 'Not found';
