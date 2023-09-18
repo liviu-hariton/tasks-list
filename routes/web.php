@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('/tasks', function () {
     return view('tasks/list', [
-        'tasks' => Task::latest()->get()
+        'tasks' => Task::latest()->paginate(5)
     ]);
 })->name('tasks.index');
 
@@ -65,12 +65,12 @@ Route::get('tasks/{task}/delete', function(Task $task) {
 })->name('tasks.destroy');
 
 // delete existing data via form post (a button) (with method spoofing @method('delete') inside the blade template)
-Route::delete('tasks/{task}', function(Task $task) {
+/*Route::delete('tasks/{task}', function(Task $task) {
     $task->delete();
 
     return redirect()->route('tasks.index')
         ->with('success', 'Task deleted successfully');
-})->name('tasks.destroy');
+})->name('tasks.destroy');*/
 
 Route::fallback(function (){
     return 'Not found';
