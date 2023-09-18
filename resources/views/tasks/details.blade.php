@@ -29,7 +29,7 @@
     @endif
 
     <ul class="list-unstyled">
-        <li class="text-secondary"><small><i class="fa fa-calendar"></i> Created: {{ $task->created_at }}</small></li>
-        <li class="text-secondary"><small><i class="fa fa-calendar-alt"></i> Edited: {{ $task->updated_at }}</small></li>
+        <li class="text-secondary"><small><i class="fa fa-calendar-plus"></i> Created: {{ $task->created_at->diffForHumans() }}</small></li>
+        <li class="text-secondary"><small><i class="fa fa-clock"></i> Edited: {{ $task->updated_at->diffForHumans() }}</small></li>
     </ul>
 @endsection
