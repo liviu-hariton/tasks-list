@@ -8,15 +8,24 @@
     <title>My Tasks</title>
 
     @vite(['resources/js/app.js'])
-
-    @yield('styles')
 </head>
 <body>
     <div class="col-lg-8 mx-auto p-4 py-md-5">
-        <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-            <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-                <i class="fab fa-bootstrap fa-2xl"></i> <span class="fs-4">My Tasks</span>
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-3 mb-md-0 text-dark text-decoration-none">
+                <i class="fa-brands fa-bootstrap fa-2xl"></i>
+                <span class="fs-3">MyTasks</span>
             </a>
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{ route('tasks.index') }}" class="btn btn-outline-secondary">Tasks list</a></li>
+            </ul>
+
+            <div class="col-md-3 text-end">
+                <a href="{{ route('tasks.newform') }}" class="btn btn-success">Add new task</a>
+
+                @yield('actions')
+            </div>
         </header>
 
         <main>

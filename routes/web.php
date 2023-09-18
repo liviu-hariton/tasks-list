@@ -17,14 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('tasks.index');
-});
-
-Route::get('/tasks', function () {
     return view('tasks/list', [
         'tasks' => Task::latest()->paginate(5)
     ]);
 })->name('tasks.index');
+
+/*Route::get('/tasks', function () {
+    return view('tasks/list', [
+        'tasks' => Task::latest()->paginate(5)
+    ]);
+})->name('tasks.index');*/
 
 Route::get('/task/{task}/edit', function (Task $task) {
     return view('tasks/edit', [
