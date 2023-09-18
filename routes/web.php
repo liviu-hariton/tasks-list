@@ -34,7 +34,22 @@ Route::get('/task/{id}', function ($id) {
 Route::view('tasks/new', 'tasks.new')->name('tasks.newform');
 
 Route::post('/tasks', function (Request $request) {
-    dd($request->all());
+    $data = $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required',
+        'long_description' => 'required'
+    ]);
+
+    $task = new Task;
+
+    $task->title = $data['title'];
+    $task->description = $data['description'];
+    $task->long_description = $data['long_description'];
+
+    $task->save();
+
+    return redirect()->route('tasks.details', ['id' => $task->id])
+        ->with('success', 'Task created successfully');
 })->name('tasks.new');
 
 Route::fallback(function (){
