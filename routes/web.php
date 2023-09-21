@@ -78,7 +78,7 @@ Route::get('task/{task}/toggle-complete', function(Task $task) {
     $task->toggleCompleted();
 
     return redirect()->route('tasks.details', ['task' => $task])
-        ->with('success', 'Task toggled successfully');
+        ->with('success', 'Task status toggled successfully');
 })->name('task.toggle-complete');
 
 Route::fallback(function (){
